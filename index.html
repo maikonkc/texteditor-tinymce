@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor de Texto Online</title>
+  
+  <script src="config.js"></script>
+
+  <script>
+    const script = document.createElement('script');
+    script.src = `https://cdn.tiny.cloud/1/${TINY_API_KEY}/tinymce/7/tinymce.min.js`;
+    script.referrerPolicy = "origin";
+    
+    script.onload = function() {
+      tinymce.init({
+        selector: '#meuEditor',
+        width: '100%',
+        height: 600,
+        resize: false,
+        language: 'pt_BR',
+        plugins: 'lists link image table code help wordcount',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
+
+        // Limpeza agressiva para Google Docs
+        paste_preprocess: function(plugin, args) {
+          args.content = args.content.replace(/width:[^;]+;?/g, '');
+          args.content = args.content.replace(/margin-left:[^;]+;?/g, '');
+          args.content = args.content.replace(/margin-right:[^;]+;?/g, '');
+        },
+        
+        invalid_styles: 'width height margin-left margin-right',
+        valid_elements: '*[*]',
+        extended_valid_elements: '*[*]',
+        paste_retain_style_properties: 'all',
+        paste_data_images: true,
+        paste_as_text: false,
+        paste_webkit_styles: 'all',
+        paste_merge_formats: false,
+        forced_root_block: 'p',
+        schema: 'html5',
+
+        content_style: `
+          body { 
+            font-family: Helvetica, Arial, sans-serif; 
+            font-size: 16px; 
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+            overflow-x: hidden;
+            padding: 10px;
+          }
+          * { 
+            max-width: 100% !important; 
+            box-sizing: border-box !important;
+          }
+          p, div {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: auto !important;
+          }
+          img, table { 
+            max-width: 100% !important; 
+            height: auto !important; 
+          }
+        `
+      });
+    };
+    
+    document.head.appendChild(script);
+  </script>
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background-color: #f4f4f9;
+      font-family: sans-serif;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 850px; 
+      margin-top: 30px;
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin: 0;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Editor de Texto</h1>
+    <form method="post">
+      <textarea id="meuEditor"></textarea>
+    </form>
+    <h6>TinyMCE v7</h6>
+  </div>
+</body>
+
+</html>
