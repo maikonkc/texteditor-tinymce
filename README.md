@@ -6,7 +6,6 @@ Este projeto corrige o erro crítico de vazamento de texto (horizontal overflow)
 - **Correção de Overflow:** Remove larguras fixas e margens da régua do Google Docs.
 - **Empilhamento Responsivo:** Título e Editor organizados verticalmente e centralizados.
 - **Altura Fixa:** Editor configurado com 600px de altura constante.
-- **Proteção de API Key:** Lógica para não expor sua credencial no GitHub.
 
 ## Como usar
 1. Crie um arquivo `config.js`.
